@@ -1,0 +1,46 @@
+.red-flag-card {
+  background-color: var(--bg-secondary);
+  border-left: 4px solid var(--accent-amber);
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 15px;
+  transition: all 0.3s ease;
+}
+
+.red-flag-card:hover {
+  background-color: var(--bg-tertiary);
+  box-shadow: 0 0 20px rgba(245, 158, 11, 0.2);
+  transform: translateX(5px);
+}
+
+.flag-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.flag-header svg {
+  color: var(--accent-amber);
+  flex-shrink: 0;
+}
+
+.flag-header h4 {
+  margin: 0;
+  font-size: 1rem;
+  color: var(--accent-amber);
+  font-weight: 600;
+}
+
+.red-flag-card p {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  .red-flag-card {
+    padding: 15px;
+  }
+}

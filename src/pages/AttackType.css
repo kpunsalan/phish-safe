@@ -1,0 +1,161 @@
+.attack-page {
+  min-height: 100vh;
+}
+
+/* Attack Header */
+.attack-header {
+  background: linear-gradient(135deg, rgba(0, 212, 255, 0.1) 0%, rgba(15, 23, 42, 0.8) 100%);
+  padding: 80px 0;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.header-content {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.header-content svg {
+  color: var(--accent-cyan);
+}
+
+.header-content h1 {
+  font-size: 3rem;
+  margin: 0;
+  text-shadow: 0 0 20px rgba(0, 212, 255, 0.2);
+}
+
+.header-content p {
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  max-width: 600px;
+  margin: 0;
+}
+
+/* Content Box */
+.content-box {
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-left: 4px solid var(--accent-cyan);
+  border-radius: 8px;
+  padding: 30px;
+  line-height: 1.8;
+}
+
+.content-box p {
+  color: var(--text-secondary);
+  font-size: 1rem;
+  margin: 0;
+}
+
+.content-box strong {
+  color: var(--accent-cyan);
+}
+
+/* Red Flags Section */
+.red-flags-section {
+  background-color: var(--bg-primary);
+}
+
+.red-flags-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+/* Interactive Section */
+.interactive-section {
+  background-color: var(--bg-tertiary);
+  border-top: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border-color);
+}
+
+/* Action Section */
+.action-section {
+  background-color: var(--bg-primary);
+}
+
+.action-steps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 30px;
+  margin-top: 40px;
+}
+
+.step {
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 30px;
+  text-align: center;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.step:hover {
+  border-color: var(--accent-cyan);
+  background-color: var(--bg-tertiary);
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(0, 212, 255, 0.1);
+}
+
+.step-number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  background: linear-gradient(135deg, rgba(0, 212, 255, 0.2) 0%, rgba(0, 212, 255, 0.1) 100%);
+  border: 2px solid var(--accent-cyan);
+  border-radius: 50%;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--accent-cyan);
+  margin: 0 auto 15px;
+  font-family: 'IBM Plex Mono', monospace;
+}
+
+.step h3 {
+  font-size: 1.2rem;
+  margin: 0 0 10px 0;
+  color: var(--accent-cyan);
+}
+
+.step p {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  .attack-header {
+    padding: 60px 0;
+  }
+
+  .header-content h1 {
+    font-size: 2rem;
+  }
+
+  .header-content p {
+    font-size: 1rem;
+  }
+
+  .content-box {
+    padding: 20px;
+  }
+
+  .action-steps {
+    grid-template-columns: 1fr;
+  }
+
+  .step {
+    text-align: left;
+  }
+
+  .step-number {
+    margin: 0 auto 15px 0;
+  }
+}
