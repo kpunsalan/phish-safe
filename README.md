@@ -1,3 +1,49 @@
+# PhishSafe 🛡️
+
+A cybersecurity awareness app that helps everyday people recognize and respond to phishing, smishing, and vishing attacks — before they become victims.
+
+---
+
+## Why PhishSafe?
+
+Phishing attacks are no longer easy to spot. Scammers have become sophisticated, and the people most targeted — older adults and everyday users — often have the least guidance on what to look for. PhishSafe was built out of personal experience: watching family members fall victim to these attacks and believing that better awareness is the best defense.
+
+---
+
+## Features
+
+- **Email Phishing Guide** — Learn what a phishing email looks like with an interactive mockup that highlights real red flags
+- **Smishing Guide** — See how SMS-based scams work, with a fake text thread showing suspicious elements
+- **Vishing Guide** — Read through a fake scam call transcript and learn what phrases should raise alarm bells
+- **Universal Red Flags** — A quick-reference list of warning signs that apply across all attack types
+- **Incident Response Walkthrough** — A step-by-step guide for people who think they may have already been targeted
+
+---
+
+## Intended Audience
+
+PhishSafe is designed for everyone — but especially for people who may not be deeply familiar with cybersecurity: older adults, non-technical users, and anyone who has ever received a suspicious email, text, or phone call and wasn't sure what to do.
+
+---
+
+## Reporting Resources
+
+If you or someone you know has been targeted, here are official places to report:
+
+- **FTC:** [reportfraud.ftc.gov](https://reportfraud.ftc.gov)
+- **FBI IC3:** [ic3.gov](https://www.ic3.gov)
+- **CISA:** [cisa.gov/report](https://www.cisa.gov/report)
+
+---
+
+## License
+
+MIT License — free to use, share, and build on.
+
+---
+
+*Built to protect the people we love.*
+
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
