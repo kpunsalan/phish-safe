@@ -15,6 +15,7 @@ Phishing attacks are no longer easy to spot. Scammers have become sophisticated,
 - **Email Phishing Guide** — Learn what a phishing email looks like with an interactive mockup that highlights real red flags
 - **Smishing Guide** — See how SMS-based scams work, with a fake text thread showing suspicious elements
 - **Vishing Guide** — Read through a fake scam call transcript and learn what phrases should raise alarm bells
+- **AI Chat Assistant** — Paste a suspicious email, text, or call description and get personalized phishing analysis, red flags, and next steps
 - **Universal Red Flags** — A quick-reference list of warning signs that apply across all attack types
 - **Incident Response Walkthrough** — A step-by-step guide for people who think they may have already been targeted
 
