@@ -1,4 +1,4 @@
-import { AlertTriangle, Lock, Mail } from 'lucide-react';
+import { AlertTriangle, Mail } from 'lucide-react';
 import RedFlagCard from '../components/RedFlagCard';
 import InteractiveEmailExample from '../components/InteractiveEmailExample';
 import './AttackType.css';

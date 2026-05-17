@@ -1,0 +1,99 @@
+.chat-widget {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 2000;
+  font-family: 'IBM Plex Sans', sans-serif;
+}
+
+.chat-toggle {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent-cyan), #00a8cc);
+  border: none;
+  color: var(--bg-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+}
+
+.chat-panel {
+  width: 360px;
+  max-height: 520px;
+  background: linear-gradient(180deg, rgba(10,15,30,0.98), rgba(15,20,30,0.98));
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+  margin-bottom: 12px;
+  display: none;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.chat-widget.open .chat-panel {
+  display: flex;
+  animation: slideUp 220ms ease;
+}
+
+@keyframes slideUp {
+  from { transform: translateY(12px); opacity: 0 }
+  to { transform: translateY(0); opacity: 1 }
+}
+
+.chat-header {
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--border-color);
+}
+.chat-title { font-weight: 700; color: var(--accent-cyan); }
+.chat-sub { font-size: 0.85rem; color: var(--text-secondary); }
+
+.chat-body {
+  padding: 12px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.chat-message { max-width: 100%; }
+.chat-message.user { align-self: flex-end; }
+.chat-message.assistant { align-self: flex-start; }
+
+.chat-message .message-text {
+  padding: 10px 12px;
+  border-radius: 8px;
+  color: var(--text-primary);
+  background: var(--bg-secondary);
+}
+
+.chat-message.user .message-text { background: linear-gradient(135deg, var(--accent-cyan), #00a8cc); color: var(--bg-primary); }
+
+.chat-input-row {
+  padding: 10px;
+  border-top: 1px solid var(--border-color);
+  display: flex;
+  gap: 8px;
+}
+.chat-input-row input {
+  flex: 1;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+}
+.send-btn {
+  padding: 10px 14px;
+  border-radius: 8px;
+  background: var(--accent-cyan);
+  color: var(--bg-primary);
+  border: none;
+}
+
+.loading-dot { width: 8px; height: 8px; background: var(--text-secondary); border-radius: 50%; display: inline-block; margin-right: 6px; opacity: 0.9 }
+
+@media (max-width: 480px) {
+  .chat-panel { width: calc(100vw - 36px); right: 0; left: 0; margin: 0 18px; }
+}
