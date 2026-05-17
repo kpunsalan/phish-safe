@@ -1,70 +1,63 @@
-// Lightweight rule-based assistant for on-device analysis
+const OPENAI_API_KEY = import.meta.env.VITE_OPENAI_API_KEY as string | undefined;
 
-function sleep(ms: number) {
-  return new Promise((r) => setTimeout(r, ms));
-}
+const SYSTEM_PROMPT = `You are PhishSafe Assistant, a friendly and knowledgeable cybersecurity awareness guide. Your purpose is to help everyday people — including older adults with limited tech experience — understand and protect themselves from phishing (email), smishing (SMS/text), and vishing (voice/phone) attacks.
 
-const urlRegex = /(https?:\/\/)?([\w-]+\.)+[\w-]+(\/\S*)?/i;
-const shorteners = /\b(bit\.ly|tinyurl|t\.co|goo\.gl|ow\.ly)\b/i;
+When a user shares a suspicious message or describes a suspicious call:
+- Identify specific red flags present
+- Explain clearly why each element is suspicious
+- Give a plain-language verdict on whether it is likely a scam
+- Advise on next steps
 
-export async function getAssistantResponse(input: string) {
-  await sleep(700);
+When answering general questions:
+- Use simple, jargon-free language
+- Be warm, patient, and non-condescending
+- Provide concrete, actionable advice
 
-  const text = input.toLowerCase();
-  // If user asks a general question
-  if (/\bwhat is\b|\bhow to\b|\bwhy\b|\bexplain\b|\bhelp\b/.test(text) && text.length < 120) {
-    return `Short answer: Phishing (email), smishing (SMS), and vishing (phone) are social-engineering attacks that try to trick you into revealing credentials, personal data, or money. If you paste a suspicious message I can analyze it line-by-line and recommend next steps.`;
+When someone says they may have already been victimized:
+- Be empathetic and reassuring first ("This is not your fault")
+- Walk through the most relevant incident response steps based on what they shared
+- Encourage them to act quickly but calmly
+
+Never be alarmist. Never make the user feel foolish. Always end with a clear next action they can take.`;
+
+export async function getAssistantResponse(input: string): Promise<{ reply: string; source: 'openai' }> {
+  if (!OPENAI_API_KEY) {
+    throw new Error('OpenAI API key is not configured. Set VITE_OPENAI_API_KEY in .env and restart the app.');
   }
 
-  const findings: string[] = [];
+  const payload = {
+    model: 'gpt-3.5-turbo',
+    messages: [
+      { role: 'system', content: SYSTEM_PROMPT },
+      { role: 'user', content: input }
+    ],
+    temperature: 0.2,
+    max_tokens: 800
+  };
 
-  if (urlRegex.test(text)) {
-    findings.push('- Contains a link or URL — hover or inspect the real destination before clicking.');
-    if (shorteners.test(text)) {
-      findings.push('- Link uses a URL shortener (e.g., bit.ly) which can hide the real destination.');
-    }
+  const resp = await fetch('https://api.openai.com/v1/chat/completions', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${OPENAI_API_KEY}`
+    },
+    body: JSON.stringify(payload)
+  });
+
+  if (!resp.ok) {
+    const text = await resp.text();
+    console.error('OpenAI API request failed:', resp.status, text);
+    throw new Error('OpenAI assistant failed to respond. Check your API key and network connection.');
   }
 
-  if (/urgent|immediately|24 hours|act now|verify now|verify your|account will be|suspend/.test(text)) {
-    findings.push('- Uses urgency or threats to pressure you into quick action.');
+  const data = await resp.json();
+  const reply = data?.choices?.[0]?.message?.content;
+  if (!reply) {
+    console.error('OpenAI API returned no reply:', data);
+    throw new Error('OpenAI assistant returned an invalid response.');
   }
 
-  if (/password|ssn|social security|bank account|routing|account number|cvv|pin/.test(text)) {
-    findings.push('- Requests sensitive personal or financial information — legitimate companies do not ask for this over unsolicited channels.');
-  }
-
-  if (/gift card|google play|itunes|paypal yourself|wire transfer|crypto|bitcoin/.test(text)) {
-    findings.push('- Asks for payment via unusual channels (gift cards, crypto, wire) — classic scam indicator.');
-  }
-
-  if (/dear (customer|user)|valued customer/.test(text)) {
-    findings.push('- Generic greeting instead of personalized name.');
-  }
-
-  if (/\b\d{3}-\d{2}-\d{4}\b/.test(text)) {
-    findings.push('- Appears to contain a Social Security number format — treat as highly sensitive.');
-  }
-
-  if (/\b(paypal|irs|amazon|ups|fedex|usps|bank)\b/.test(text) && /\bmail\b|\.com|@/.test(text) === false) {
-    // no-op; keep conservative
-  }
-
-  // Fallback for short messages that look like a question
-  if (findings.length === 0) {
-    if (text.length < 300) {
-      return `I didn't detect obvious red flags from the short message, but here are safe next steps:\n- Do not click links or download attachments.\n- Verify by contacting the organization using a number or website you already trust.\n- If you shared any passwords or financial data, change those passwords and contact your bank.`;
-    }
-    return `I couldn't find strong automated signals, but treat unknown messages with suspicion. Paste the full message (headers, sender, and full link target if possible) for a more thorough analysis.`;
-  }
-
-  const actions = [] as string[];
-  actions.push('Do not click links or call numbers provided in the message.');
-  actions.push('If you shared passwords, change them now and enable 2FA where possible.');
-  if (findings.some(f => /payment|gift cards|wire|crypto/.test(f))) {
-    actions.push('Contact your bank immediately if you shared payment information.');
-  }
-
-  return `Analysis:\n${findings.join('\n')}\n\nRecommended next steps:\n- ${actions.join('\n- ')}`;
+  return { reply, source: 'openai' };
 }
 
 export default getAssistantResponse;

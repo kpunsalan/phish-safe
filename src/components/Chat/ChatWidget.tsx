@@ -17,6 +17,7 @@ export default function ChatWidget() {
   ]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
+  const [lastSource, setLastSource] = useState<'openai' | 'error' | null>(null);
   const listRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -36,12 +37,15 @@ export default function ChatWidget() {
     setLoading(true);
 
     try {
-      const reply = await getAssistantResponse(trimmed);
+      const { reply, source } = await getAssistantResponse(trimmed);
       const assistantMsg: Message = { id: `a-${Date.now()}`, role: 'assistant', text: reply };
       setMessages(m => [...m, assistantMsg]);
+      setLastSource(source);
     } catch (err) {
-      const errMsg: Message = { id: `e-${Date.now()}`, role: 'assistant', text: 'Sorry — I had trouble analyzing that. Try shortening or rephrasing the message.' };
+      const message = err instanceof Error ? err.message : 'Sorry — I had trouble analyzing that. Please try again later.';
+      const errMsg: Message = { id: `e-${Date.now()}`, role: 'assistant', text: message };
       setMessages(m => [...m, errMsg]);
+      setLastSource('error');
     } finally {
       setLoading(false);
     }
@@ -66,6 +70,13 @@ export default function ChatWidget() {
         <div className="chat-header">
           <div className="chat-title">PhishSafe Assistant</div>
           <div className="chat-sub">Security-focused help with suspicious messages</div>
+          <div className="assistant-badge" aria-hidden>
+            {lastSource === 'openai'
+              ? <span className="badge openai">OpenAI</span>
+              : lastSource === 'error'
+              ? <span className="badge error">OpenAI error</span>
+              : <span className="badge unknown">Waiting</span>}
+          </div>
         </div>
 
         <div className="chat-body" ref={listRef}>

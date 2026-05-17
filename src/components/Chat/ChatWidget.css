@@ -49,6 +49,12 @@
 .chat-title { font-weight: 700; color: var(--accent-cyan); }
 .chat-sub { font-size: 0.85rem; color: var(--text-secondary); }
 
+.assistant-badge { margin-top: 8px; }
+.assistant-badge .badge { font-size: 0.72rem; padding: 4px 8px; border-radius: 999px; color: var(--bg-primary); display: inline-block; }
+.assistant-badge .openai { background: linear-gradient(90deg,#0ea5a1,#06b6d4); }
+.assistant-badge .error { background: #dc2626; }
+.assistant-badge .unknown { background: #94a3b8; }
+
 .chat-body {
   padding: 12px;
   overflow-y: auto;

@@ -44,6 +44,15 @@ MIT License — free to use, share, and build on.
 
 *Built to protect the people we love.*
 
+## OpenAI Assistant (direct)
+
+The personalized PhishSafe Assistant now calls OpenAI directly from the browser, so you only need to run the app locally.
+
+1. Copy `.env.example` to `.env` and set `VITE_OPENAI_API_KEY` to your key (do not commit the key).
+2. Run the app: `npm run dev`.
+
+The chat widget sends messages straight to the OpenAI Chat API using the system prompt defined in the app. There is no separate proxy required.
+
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
