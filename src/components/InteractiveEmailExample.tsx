@@ -32,7 +32,7 @@ export default function InteractiveEmailExample() {
       element: 'urgency'
     },
     {
-      id: 'link',
+      id: 'button',
       text: 'VERIFY ACCOUNT →',
       tooltip: 'Links often go to fake websites. Hover over or right-click links to see the real URL.',
       element: 'button'
